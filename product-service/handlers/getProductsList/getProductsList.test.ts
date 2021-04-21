@@ -1,5 +1,5 @@
-import { ProductDALImpl, Product } from '../../productDAL';
-import { UtilsImpl } from '../../utils';
+import { ProductDALImpl, Product } from '../../db/productDAL';
+import { UtilsServiceImpl } from '../../utilsService';
 import { getProductsList } from './getProductsList';
 
 describe('getProductsList', () => {
@@ -7,10 +7,10 @@ describe('getProductsList', () => {
 
   it('should return found product', async () => {
     const getProductsStub = jest.fn().mockImplementationOnce(() => Promise.resolve(products));
-    ProductDALImpl.prototype.getProducts = getProductsStub;
+    ProductDALImpl.prototype.getAllProducts = getProductsStub;
 
-    const createSuccessResponseSpy = jest.spyOn(UtilsImpl.prototype, 'createSuccessResponse');
-    const withCORSSpy = jest.spyOn(UtilsImpl.prototype, 'withCORS');
+    const createSuccessResponseSpy = jest.spyOn(UtilsServiceImpl.prototype, 'createSuccessResponse');
+    const withCORSSpy = jest.spyOn(UtilsServiceImpl.prototype, 'withCORS');
 
     const res = await getProductsList();
 

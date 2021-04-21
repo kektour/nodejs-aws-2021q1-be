@@ -1,5 +1,5 @@
-import { ProductDALImpl } from '../../productDAL';
-import { UtilsImpl } from '../../utils';
+import { ProductDALImpl } from '../../db/productDAL';
+import { UtilsServiceImpl } from '../../utilsService';
 import { getProductsById } from './getProductsById';
 
 describe('getProductsById', () => {
@@ -11,8 +11,8 @@ describe('getProductsById', () => {
     const findByIdStub = jest.fn().mockImplementationOnce(() => Promise.resolve(expectedProduct));
     ProductDALImpl.prototype.getProductById = findByIdStub;
 
-    const createSuccessResponseSpy = jest.spyOn(UtilsImpl.prototype, 'createSuccessResponse');
-    const withCORSSpy = jest.spyOn(UtilsImpl.prototype, 'withCORS');
+    const createSuccessResponseSpy = jest.spyOn(UtilsServiceImpl.prototype, 'createSuccessResponse');
+    const withCORSSpy = jest.spyOn(UtilsServiceImpl.prototype, 'withCORS');
 
     const res = await getProductsById(event);
 

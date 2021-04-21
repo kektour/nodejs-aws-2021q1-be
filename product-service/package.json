@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
-  "dependencies": {},
+  "dependencies": {
+    "pg": "^8.6.0",
+    "yup": "^0.32.9"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.22",
+    "@types/pg": "^7.14.11",
     "jest": "^26.6.3",
+    "serverless-offline": "^6.9.0",
     "serverless-webpack": "^5.4.1",
     "ts-jest": "^26.5.4",
     "ts-loader": "^8.1.0",
@@ -14,6 +19,7 @@
     "webpack": "^5.31.2"
   },
   "scripts": {
+    "dev": "sls offline",
     "test": "jest"
   },
   "author": "",
