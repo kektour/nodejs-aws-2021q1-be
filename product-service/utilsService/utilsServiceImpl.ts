@@ -1,18 +1,16 @@
 import { ValidationError } from 'yup';
-import { UtilsService } from './utilsService';
+import { Response, UtilsService } from './utilsService';
 
 export class UtilsServiceImpl implements UtilsService {
-  public withCORS() {
-    return {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-    };
-  }
-
-  public createResponse(response: Record<string, any>, code = 200) {
+  public createResponse(response: Record<string, any>, code: number = 200, headers: Record<string, any> = {}): Response {
     return {
       statusCode: code,
       body: JSON.stringify(response),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        ...headers,
+      },
     };
   }
 

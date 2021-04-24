@@ -15,12 +15,7 @@ export const getProductsById = async (event: any) => {
     const { id } = event.pathParameters;
     const product = await productDAL.getProductById(id);
 
-    return {
-      ...utilsService.createResponse({ product }),
-      headers: {
-        ...utilsService.withCORS(),
-      },
-    };
+    return utilsService.createResponse({ product });
   } catch (err) {
     console.error(err);
     return utilsService.createResponse({ err: 'Unhandled error' }, 500);

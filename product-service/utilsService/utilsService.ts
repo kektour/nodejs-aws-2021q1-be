@@ -1,18 +1,12 @@
 import { ValidationError } from 'yup';
 
+export interface Response {
+  statusCode: number;
+  body: string;
+  headers: Record<string, any>;
+}
+
 export interface UtilsService {
-  withCORS(): {
-    'Access-Control-Allow-Origin': string;
-    'Access-Control-Allow-Credentials': boolean;
-  };
-
-  createResponse(
-    response: Record<string, any>,
-    code?: number
-  ): {
-    statusCode: number;
-    body: string;
-  };
-
+  createResponse(response: Record<string, any>, code?: number, headers?: Record<string, any>): Response;
   transformYupErrorsToObject(topLevelError: ValidationError): Record<string, string>;
 }

@@ -37,7 +37,7 @@ export class ProductDALImpl implements ProductDAL {
     await connection.query('BEGIN');
 
     try {
-      const {rows: [product]} = await connection.query<ProductBase>('insert into product (title, description, price) values ($1, $2, $3) returning *', [title, description, price]);
+      const { rows: [product] } = await connection.query<ProductBase>('insert into product (title, description, price) values ($1, $2, $3) returning *', [title, description, price]);
       await connection.query('insert into stock (product_id, count) values ($1, $2)', [product.id, count]);
       await connection.query('COMMIT');
 

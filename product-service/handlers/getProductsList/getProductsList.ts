@@ -13,17 +13,10 @@ export const getProductsList = async () => {
 
   try {
     const products = await productDAL.getAllProducts();
-    return {
-      ...utilsService.createResponse({
-        products,
-        meta: {
-          count: products.length,
-        },
-      }),
-      headers: {
-        ...utilsService.withCORS(),
-      },
-    };
+    return utilsService.createResponse({
+      products,
+      meta: { count: products.length },
+    });
   } catch (err) {
     console.error(err);
     return utilsService.createResponse({ err: 'Unhandled error' }, 500);
