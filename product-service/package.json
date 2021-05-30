@@ -20,6 +20,7 @@
   },
   "scripts": {
     "dev": "sls offline",
+    "deploy": "sls deploy",
     "test": "jest"
   },
   "author": "",
