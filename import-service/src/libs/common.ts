@@ -10,3 +10,5 @@ export const getEnvVar = (value: string): string => {
 
   return envVar;
 };
+
+export const getUUID = (): string => Math.random().toString(16).slice(2);

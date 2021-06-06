@@ -1,7 +1,7 @@
 import { Connection, ConnectionImpl } from '../../db/connection';
 import { ProductDAL, ProductDALImpl } from '../../db/productDAL';
-import { EnvService, EnvServiceImpl } from '../../envService';
-import { UtilsService, UtilsServiceImpl } from '../../utilsService';
+import { EnvService, EnvServiceImpl } from '../../services/envService';
+import { UtilsService, UtilsServiceImpl } from '../../services/utilsService';
 
 const envService: EnvService = new EnvServiceImpl();
 const connection: Connection = new ConnectionImpl(envService);

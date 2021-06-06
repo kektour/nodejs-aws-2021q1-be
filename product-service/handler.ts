@@ -1,5 +1,6 @@
+import { addProduct } from './handlers/addProduct';
+import { catalogBatchProcess } from './handlers/catalogBatchProcess';
 import { getProductsById } from './handlers/getProductsById';
 import { getProductsList } from './handlers/getProductsList';
-import { addProduct } from './handlers/addProduct';
 
-export { getProductsById, getProductsList, addProduct };
+export { getProductsById, getProductsList, addProduct, catalogBatchProcess };

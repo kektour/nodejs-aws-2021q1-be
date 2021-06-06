@@ -20,6 +20,7 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       AWS_GENERAL_REGION: 'us-east-1',
       IMPORT_SERVICE_BUCKET: '${self:custom.environment.IMPORT_SERVICE_BUCKET}',
+      SQS_URL: 'https://sqs.us-east-1.amazonaws.com/109705787307/catalogItemsQueue.fifo', // '${state:product-service.catalogItemsQueue.url}'
     },
     iam: {
       role: {
@@ -29,6 +30,11 @@ const serverlessConfiguration: AWS = {
             Action: ['s3:GetObject', 's3:PutObject', 's3:DeleteObject'],
             Resource: 'arn:aws:s3:::${self:custom.environment.IMPORT_SERVICE_BUCKET}/*',
           },
+          {
+            Effect: 'Allow',
+            Action: ['sqs:SendMessage'],
+            Resource: 'arn:aws:sqs:us-east-1:109705787307:catalogItemsQueue.fifo',
+          }
         ],
       },
     },

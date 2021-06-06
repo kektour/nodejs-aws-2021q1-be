@@ -1,6 +1,14 @@
 import { ProductDALImpl } from '../../db/productDAL';
-import { UtilsServiceImpl } from '../../utilsService';
+import { UtilsServiceImpl } from '../../services/utilsService';
 import { getProductsById } from './getProductsById';
+
+jest.mock('../../services/envService/envServiceImpl', () => {
+  const { EnvServiceImpl: mockRealServiceImpl } = jest.requireActual('../../services/envService/envServiceImpl');
+
+  mockRealServiceImpl.prototype.getVar = (val: string) => val;
+
+  return { EnvServiceImpl: mockRealServiceImpl };
+});
 
 describe('getProductsById', () => {
   it('should return found product', async () => {
@@ -8,11 +16,10 @@ describe('getProductsById', () => {
     const expectedProduct = { id: productId, title: 'Foo', description: 'Bar', price: 123 };
     const event = { pathParameters: { id: productId } };
 
-    const findByIdStub = jest.fn().mockImplementationOnce(() => Promise.resolve(expectedProduct));
+    const findByIdStub = jest.fn().mockResolvedValueOnce(expectedProduct);
     ProductDALImpl.prototype.getProductById = findByIdStub;
 
-    const createSuccessResponseSpy = jest.spyOn(UtilsServiceImpl.prototype, 'createSuccessResponse');
-    const withCORSSpy = jest.spyOn(UtilsServiceImpl.prototype, 'withCORS');
+    const createResponseSpy = jest.spyOn(UtilsServiceImpl.prototype, 'createResponse');
 
     const res = await getProductsById(event);
 
@@ -25,14 +32,13 @@ describe('getProductsById', () => {
       },
     });
     expect(findByIdStub).toHaveBeenCalledWith(productId);
-    expect(createSuccessResponseSpy).toHaveBeenCalled();
-    expect(withCORSSpy).toHaveBeenCalled();
+    expect(createResponseSpy).toHaveBeenCalled();
   });
 
   it('should return null if product not found', async () => {
     const event = { pathParameters: { id: 1 } };
 
-    const findByIdStub = jest.fn().mockImplementationOnce(() => Promise.resolve(null));
+    const findByIdStub = jest.fn().mockResolvedValueOnce(null);
     ProductDALImpl.prototype.getProductById = findByIdStub;
 
     const res = await getProductsById(event);
