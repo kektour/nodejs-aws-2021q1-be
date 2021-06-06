@@ -1,9 +1,9 @@
 import { ProductDALImpl } from '../../db/productDAL';
-import { UtilsServiceImpl } from '../../utilsService';
+import { UtilsServiceImpl } from '../../services/utilsService';
 import { getProductsById } from './getProductsById';
 
-jest.mock('../../envService/envServiceImpl', () => {
-  const { EnvServiceImpl: mockRealServiceImpl } = jest.requireActual('../../envService/envServiceImpl');
+jest.mock('../../services/envService/envServiceImpl', () => {
+  const { EnvServiceImpl: mockRealServiceImpl } = jest.requireActual('../../services/envService/envServiceImpl');
 
   mockRealServiceImpl.prototype.getVar = (val: string) => val;
 
