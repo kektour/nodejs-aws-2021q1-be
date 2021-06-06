@@ -19,7 +19,7 @@
     "webpack": "^5.31.2"
   },
   "scripts": {
-    "dev": "sls offline",
+    "start": "sls offline",
     "deploy": "sls deploy",
     "test": "jest",
     "test:watch": "jest --watch"

@@ -1,5 +1,5 @@
 import { Client, ClientConfig } from 'pg';
-import { EnvService } from '../../envService';
+import { EnvService } from '../../services/envService';
 import { Connection } from './connection';
 
 export class ConnectionImpl implements Connection {
@@ -15,7 +15,7 @@ export class ConnectionImpl implements Connection {
       ssl: {
         rejectUnauthorized: false,
       },
-      connectionTimeoutMillis: 5000,
+      connectionTimeoutMillis: 60 * 1000,
     };
   }
 
