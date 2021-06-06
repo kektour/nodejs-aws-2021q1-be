@@ -2,15 +2,22 @@ import { ProductDALImpl, Product } from '../../db/productDAL';
 import { UtilsServiceImpl } from '../../utilsService';
 import { getProductsList } from './getProductsList';
 
+jest.mock('../../envService/envServiceImpl', () => {
+  const { EnvServiceImpl: mockRealServiceImpl } = jest.requireActual('../../envService/envServiceImpl');
+
+  mockRealServiceImpl.prototype.getVar = (val: string) => val;
+
+  return { EnvServiceImpl: mockRealServiceImpl };
+});
+
 describe('getProductsList', () => {
-  const products: Array<Product> = [{ id: '1', title: 'Foo', description: 'Bar', price: 123 }];
+  const products: Array<Product> = [{ id: '1', title: 'Foo', description: 'Bar', price: 123, count: 1 }];
 
   it('should return found product', async () => {
-    const getProductsStub = jest.fn().mockImplementationOnce(() => Promise.resolve(products));
+    const getProductsStub = jest.fn().mockResolvedValueOnce(products);
     ProductDALImpl.prototype.getAllProducts = getProductsStub;
 
-    const createSuccessResponseSpy = jest.spyOn(UtilsServiceImpl.prototype, 'createSuccessResponse');
-    const withCORSSpy = jest.spyOn(UtilsServiceImpl.prototype, 'withCORS');
+    const createResponseSpy = jest.spyOn(UtilsServiceImpl.prototype, 'createResponse');
 
     const res = await getProductsList();
 
@@ -28,7 +35,6 @@ describe('getProductsList', () => {
       },
     });
     expect(getProductsStub).toHaveBeenCalled();
-    expect(createSuccessResponseSpy).toHaveBeenCalled();
-    expect(withCORSSpy).toHaveBeenCalled();
+    expect(createResponseSpy).toHaveBeenCalled();
   });
 });

@@ -21,7 +21,8 @@
   "scripts": {
     "dev": "sls offline",
     "deploy": "sls deploy",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "",
   "license": "ISC"
