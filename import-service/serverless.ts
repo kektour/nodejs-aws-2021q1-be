@@ -34,12 +34,29 @@ const serverlessConfiguration: AWS = {
             Effect: 'Allow',
             Action: ['sqs:SendMessage'],
             Resource: 'arn:aws:sqs:us-east-1:109705787307:catalogItemsQueue.fifo',
-          }
+          },
         ],
       },
     },
   },
   functions: { importProductsFile, importFileParser },
+  resources: {
+    Resources: {
+      GatewayResponseDefault4XX: {
+        Type: 'AWS::ApiGateway::GatewayResponse',
+        Properties: {
+          ResponseParameters: {
+            'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Headers': "'*'",
+          },
+          ResponseType: 'DEFAULT_4XX',
+          RestApiId: {
+            Ref: 'ApiGatewayRestApi',
+          },
+        },
+      },
+    },
+  },
   plugins: ['serverless-webpack', 'serverless-offline'],
   custom: {
     webpack: {

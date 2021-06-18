@@ -14,6 +14,13 @@ export default {
             },
           },
         },
+        authorizer: {
+          name: 'tokenAuthorizer',
+          arn: 'arn:aws:lambda:us-east-1:109705787307:function:authorization-service-dev-basicAuthorizer',
+          resultTtlInSeconds: 0,
+          identitySource: 'method.request.header.Authorization',
+          type: 'token',
+        },
       },
     },
   ],
